@@ -33,12 +33,19 @@ export default function Footer() {
               <li><Link href="/signals" className="hover:text-orange">Source signals</Link></li>
               <li><Link href="/metros" className="hover:text-orange">Metro skyline</Link></li>
               <li><Link href="/properties" className="hover:text-orange">Properties</Link></li>
+              <li><Link href="/risk" className="hover:text-orange">Risk surfaces</Link></li>
+              <li><Link href="/terminal" className="hover:text-orange">Terminal</Link></li>
+              <li><Link href="/dashboard" className="hover:text-orange">Dashboard</Link></li>
             </ul>
           </div>
           <div>
             <div className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Platform</div>
             <ul className="mt-3 space-y-1.5 text-sm">
               <li><Link href="/sources" className="hover:text-orange">Source catalog</Link></li>
+              <li><Link href="/explore" className="hover:text-orange">Address explorer</Link></li>
+              <li><Link href="/team" className="hover:text-orange">Team</Link></li>
+              <li><Link href="/partners" className="hover:text-orange">Partners</Link></li>
+              <li><Link href="/faq" className="hover:text-orange">FAQ</Link></li>
               <li><Link href="/about" className="hover:text-orange">About</Link></li>
               <li><Link href="/contact" className="hover:text-orange">Request access</Link></li>
             </ul>

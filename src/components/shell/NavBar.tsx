@@ -5,13 +5,16 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const NAV = [
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/terminal", label: "Terminal" },
   { href: "/globe", label: "Globe" },
   { href: "/markets", label: "Markets" },
   { href: "/signals", label: "Signals" },
   { href: "/metros", label: "Metros" },
   { href: "/properties", label: "Properties" },
+  { href: "/risk", label: "Risk" },
+  { href: "/explore", label: "Explore" },
   { href: "/sources", label: "Sources" },
-  { href: "/about", label: "About" },
 ];
 
 export default function NavBar() {
