@@ -2,8 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Activity, Database, Globe2, Layers } from "lucide-react";
 import HeroGlobe from "@/components/globe/HeroGlobe";
 import SampleBadge from "@/components/ui/SampleBadge";
-import { FEATURED_DEAL } from "@/lib/sample-data";
-import { fmtUSD } from "@/lib/utils";
+import { REPRIME_FEATURED_DEAL } from "@/lib/reprime-data";
 
 const KPIS = [
   { label: "Live sources", value: "22", note: "fan-out APIs" },
@@ -99,19 +98,19 @@ export default function Home() {
             <div className="rounded-lg border border-border bg-paper p-6 md:col-span-2">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-slate-500">{FEATURED_DEAL.sector} · {FEATURED_DEAL.status}</div>
-                  <div className="mt-1 font-display text-2xl font-medium">{FEATURED_DEAL.title}</div>
+                  <div className="text-xs uppercase tracking-wider text-slate-500">Multifamily · {REPRIME_FEATURED_DEAL.summary.split(" · ")[1]}</div>
+                  <div className="mt-1 font-display text-2xl font-medium">{REPRIME_FEATURED_DEAL.name}</div>
+                  <div className="mt-1 text-xs text-slate-500">{REPRIME_FEATURED_DEAL.address}</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-xs uppercase tracking-wider text-slate-500">Ask</div>
-                  <div className="font-display text-2xl font-medium text-orange">{fmtUSD(FEATURED_DEAL.ask)}</div>
+                  <div className="text-xs uppercase tracking-wider text-slate-500">Capital stack</div>
+                  <div className="font-display text-2xl font-medium text-orange">{REPRIME_FEATURED_DEAL.capital_stack.total}</div>
                 </div>
               </div>
-              <div className="mt-6 grid grid-cols-2 gap-px bg-border md:grid-cols-4">
-                <Stat label="SF" value={`${(FEATURED_DEAL.sf / 1_000_000).toFixed(2)}M`} />
-                <Stat label="NOI" value={fmtUSD(FEATURED_DEAL.noi)} />
-                <Stat label="Cap" value={`${FEATURED_DEAL.capRate}%`} />
-                <Stat label="Metros" value={FEATURED_DEAL.metros.join(", ")} />
+              <div className="mt-6 grid grid-cols-3 gap-px bg-border md:grid-cols-6">
+                {REPRIME_FEATURED_DEAL.metrics.map((m) => (
+                  <Stat key={m.label} label={m.label} value={m.value} />
+                ))}
               </div>
             </div>
           </div>
