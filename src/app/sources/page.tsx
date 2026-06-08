@@ -4,6 +4,7 @@ import { LIVE_SOURCES } from "@/lib/sample-data";
 import { REPRIME_CATEGORIES, REPRIME_STATS } from "@/lib/reprime-data";
 import SampleBadge from "@/components/ui/SampleBadge";
 import { Search } from "lucide-react";
+import SourceFlow from "@/components/flow/SourceFlow";
 
 export default function SourcesPage() {
   const [q, setQ] = useState("");
@@ -56,6 +57,17 @@ export default function SourcesPage() {
                 <div className="mt-1 font-display text-2xl font-medium text-ink">{c.count}</div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Flow visualization — source family → use case → asset type */}
+        <div className="mt-12">
+          <div className="flex items-baseline justify-between">
+            <div className="text-[11px] uppercase tracking-wider text-slate-500">Where the data flows · source family → use case → asset type</div>
+            <SampleBadge />
+          </div>
+          <div className="mt-4">
+            <SourceFlow />
           </div>
         </div>
 

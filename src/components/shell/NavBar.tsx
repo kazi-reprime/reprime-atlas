@@ -15,6 +15,7 @@ const NAV = [
   { href: "/risk", label: "Risk" },
   { href: "/explore", label: "Explore" },
   { href: "/sources", label: "Sources" },
+  { href: "/atlas", label: "Atlas" },
 ];
 
 export default function NavBar() {

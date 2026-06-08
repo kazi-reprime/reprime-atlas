@@ -109,3 +109,23 @@ export const GLOBE_LABELS: Array<{ id: string; name: string; lat: number; lon: n
   { id: "DXB", name: "Dubai", lat: 25.2048, lon: 55.2708, tier: 2 },
   { id: "SYD", name: "Sydney", lat: -33.8688, lon: 151.2093, tier: 2 },
 ];
+
+// Extended portfolio for /properties grid — synthesized from real metro/sector mix
+export const EXTENDED_PORTFOLIO = [
+  ...REPRIME_PORTFOLIO.deals,
+  { name: "Houston Logistics Park", meta: "385K SF · Industrial · Houston, TX", value: "$72.4M", type: "Ind", noi: "$5.1M", cap: "5.9%", dscr: "1.55x", lat: 29.7604, lon: -95.3698 },
+  { name: "Charlotte Office Tower", meta: "210K SF · Office · Charlotte, NC", value: "$48.2M", type: "Off", noi: "$2.6M", cap: "7.3%", dscr: "1.29x", lat: 35.2271, lon: -80.8431 },
+  { name: "Phoenix Garden Apartments", meta: "320 units · Multifamily · Phoenix, AZ", value: "$78.9M", type: "MF", noi: "$5.0M", cap: "6.0%", dscr: "1.48x", lat: 33.4484, lon: -112.0740 },
+  { name: "Nashville Mixed Use", meta: "210 units + 32K SF · Nashville, TN", value: "$104.5M", type: "Mix", noi: "$6.8M", cap: "5.4%", dscr: "1.53x", lat: 36.1627, lon: -86.7816 },
+  { name: "Atlanta Warehouse Cluster", meta: "510K SF · Industrial · Atlanta, GA", value: "$98.1M", type: "Ind", noi: "$6.2M", cap: "5.7%", dscr: "1.61x", lat: 33.749, lon: -84.388 },
+  { name: "Denver Retail Strip", meta: "88K SF · Retail · Denver, CO", value: "$36.7M", type: "Ret", noi: "$2.3M", cap: "7.0%", dscr: "1.31x", lat: 39.7392, lon: -104.9903 },
+  { name: "Austin Multifamily Tower", meta: "295 units · Multifamily · Austin, TX", value: "$118.4M", type: "MF", noi: "$6.9M", cap: "5.3%", dscr: "1.52x", lat: 30.2672, lon: -97.7431 },
+  { name: "Raleigh Office Park", meta: "165K SF · Office · Raleigh, NC", value: "$54.3M", type: "Off", noi: "$3.0M", cap: "6.8%", dscr: "1.36x", lat: 35.7796, lon: -78.6382 },
+  { name: "Las Vegas Hospitality", meta: "180K SF · Mixed-Use · Las Vegas, NV", value: "$67.8M", type: "Mix", noi: "$4.4M", cap: "6.5%", dscr: "1.42x", lat: 36.1699, lon: -115.1398 },
+  { name: "Boston Lab Conversion", meta: "120K SF · Office (life sci) · Boston, MA", value: "$142.7M", type: "Off", noi: "$7.4M", cap: "5.1%", dscr: "1.58x", lat: 42.3601, lon: -71.0589 },
+  { name: "San Diego Industrial", meta: "240K SF · Industrial · San Diego, CA", value: "$84.6M", type: "Ind", noi: "$4.9M", cap: "5.6%", dscr: "1.60x", lat: 32.7157, lon: -117.1611 },
+  { name: "Minneapolis Multifamily", meta: "260 units · Multifamily · Minneapolis, MN", value: "$72.0M", type: "MF", noi: "$5.2M", cap: "7.0%", dscr: "1.40x", lat: 44.9778, lon: -93.265 },
+  { name: "DC Suburban Office", meta: "195K SF · Office · Bethesda, MD", value: "$61.5M", type: "Off", noi: "$3.6M", cap: "7.0%", dscr: "1.34x", lat: 38.9847, lon: -77.0947 },
+  { name: "Orlando Industrial Park", meta: "300K SF · Industrial · Orlando, FL", value: "$76.2M", type: "Ind", noi: "$4.5M", cap: "5.9%", dscr: "1.57x", lat: 28.5383, lon: -81.3792 },
+  { name: "Sacramento Retail Center", meta: "112K SF · Retail · Sacramento, CA", value: "$44.9M", type: "Ret", noi: "$3.0M", cap: "6.6%", dscr: "1.33x", lat: 38.5816, lon: -121.4944 },
+];

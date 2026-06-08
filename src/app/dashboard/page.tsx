@@ -3,6 +3,7 @@ import TreasuryCurve from "@/components/charts/TreasuryCurve";
 import SpreadHistory from "@/components/charts/SpreadHistory";
 import CompositionDonuts from "@/components/charts/CompositionDonuts";
 import LiveHealthDots from "@/components/signals/LiveHealthDots";
+import AnimatedCounter from "@/components/animation/AnimatedCounter";
 import HeroGlobe from "@/components/globe/HeroGlobe";
 import SampleBadge from "@/components/ui/SampleBadge";
 import { REPRIME_STATS, REPRIME_PORTFOLIO } from "@/lib/reprime-data";
@@ -64,10 +65,15 @@ export default function DashboardPage() {
 }
 
 function KpiTile({ label, value, sub }: { label: string; value: string; sub: string }) {
+  const numMatch = value.match(/^([0-9,.]+)(.*)$/);
+  const numericPart = numMatch ? parseFloat(numMatch[1].replace(/,/g, "")) : null;
+  const suffix = numMatch ? numMatch[2] : "";
   return (
     <div className="rounded-lg border border-paper/10 bg-paper/5 p-4">
       <div className="text-[10px] uppercase tracking-wider text-paper/50">{label}</div>
-      <div className="mt-1 font-display text-3xl font-medium text-gold-soft">{value}</div>
+      <div className="mt-1 font-display text-3xl font-medium text-gold-soft">
+        {numericPart !== null ? <AnimatedCounter to={numericPart} suffix={suffix} /> : value}
+      </div>
       <div className="mt-0.5 text-[10px] text-paper/50">{sub}</div>
     </div>
   );

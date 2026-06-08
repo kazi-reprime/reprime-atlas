@@ -1,9 +1,9 @@
+"use client";
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import { ArrowRight, MapPin } from "lucide-react";
 import SampleBadge from "@/components/ui/SampleBadge";
-import { REPRIME_PORTFOLIO, REPRIME_FEATURED_DEAL } from "@/lib/reprime-data";
-
-export const metadata = { title: "Properties" };
+import { EXTENDED_PORTFOLIO, REPRIME_FEATURED_DEAL } from "@/lib/reprime-data";
 
 const typeColor: Record<string, string> = {
   MF: "bg-emerald-100 text-emerald-800",
@@ -12,12 +12,14 @@ const typeColor: Record<string, string> = {
   Mix: "bg-violet-100 text-violet-800",
   Ret: "bg-rose-100 text-rose-800",
 };
-const typeLabel: Record<string, string> = {
-  MF: "Multifamily", Off: "Office", Ind: "Industrial", Mix: "Mixed-Use", Ret: "Retail",
-};
+const typeLabel: Record<string, string> = { MF: "Multifamily", Off: "Office", Ind: "Industrial", Mix: "Mixed-Use", Ret: "Retail" };
+const TYPES = ["MF", "Ind", "Off", "Mix", "Ret"] as const;
 
 export default function PropertiesPage() {
-  const totalAum = REPRIME_PORTFOLIO.deals.reduce((s, d) => s + parseFloat(d.value.replace(/[^0-9.]/g, "")), 0);
+  const [filter, setFilter] = useState<string | null>(null);
+  const deals = useMemo(() => filter ? EXTENDED_PORTFOLIO.filter((d) => d.type === filter) : EXTENDED_PORTFOLIO, [filter]);
+  const totalAum = EXTENDED_PORTFOLIO.reduce((s, d) => s + parseFloat(d.value.replace(/[^0-9.]/g, "")), 0);
+
   return (
     <section className="bg-paper">
       <div className="mx-auto max-w-7xl px-6 py-16">
@@ -26,13 +28,13 @@ export default function PropertiesPage() {
             <div className="text-xs uppercase tracking-wider text-orange">Portfolio</div>
             <h1 className="mt-2 font-display text-5xl font-medium tracking-tight">Properties under coverage</h1>
             <p className="mt-3 max-w-2xl text-slate-700">
-              Reviewed, sourced, or advised across {REPRIME_PORTFOLIO.deals.length} active positions. ${totalAum.toFixed(1)}M aggregate. Underwriting from the RePrime warehouse — every cap rate and DSCR is shown raw, no editorial smoothing.
+              Reviewed, sourced, or advised across {EXTENDED_PORTFOLIO.length} positions in {new Set(EXTENDED_PORTFOLIO.map((d) => d.meta.split("·")[2]?.trim())).size}+ metros. ${totalAum.toFixed(0)}M aggregate.
             </p>
           </div>
           <SampleBadge />
         </div>
 
-        {/* Featured deal — full underwrite */}
+        {/* Featured underwrite */}
         <div className="mt-12 overflow-hidden rounded-2xl border border-border bg-paper shadow-sm">
           <div className="grid gap-0 md:grid-cols-3">
             <div className="bg-gradient-to-br from-navy-deep to-navy p-8 text-paper md:col-span-1">
@@ -99,48 +101,54 @@ export default function PropertiesPage() {
           </div>
         </div>
 
-        {/* Portfolio grid */}
-        <div className="mt-12">
-          <div className="text-xs uppercase tracking-wider text-slate-500">All positions · {REPRIME_PORTFOLIO.total_label} aggregate</div>
-          <div className="mt-4 grid gap-px bg-border md:grid-cols-2 lg:grid-cols-3">
-            {REPRIME_PORTFOLIO.deals.map((d) => (
-              <div key={d.name} className="group bg-paper p-6 transition hover:bg-slate-100/60">
-                <div className="flex items-center justify-between">
-                  <span className={`rounded px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ${typeColor[d.type]}`}>
-                    {typeLabel[d.type]}
-                  </span>
-                  <span className="font-mono text-xs text-slate-500">{d.cap}</span>
-                </div>
-                <div className="mt-4 font-display text-xl font-medium text-ink">{d.name}</div>
-                <div className="mt-1 flex items-center gap-1 text-xs text-slate-500">
-                  <MapPin size={11} /> {d.meta}
-                </div>
-                <div className="mt-5 grid grid-cols-3 gap-3">
-                  <Stat label="Value" value={d.value} accent />
-                  <Stat label="NOI" value={d.noi} />
-                  <Stat label="DSCR" value={d.dscr} />
-                </div>
+        {/* Filter chips */}
+        <div className="mt-12 flex flex-wrap items-center gap-2">
+          <span className="text-xs uppercase tracking-wider text-slate-500">Filter:</span>
+          <button
+            onClick={() => setFilter(null)}
+            className={`rounded-full px-3 py-1 text-xs transition ${filter === null ? "bg-ink text-paper" : "bg-slate-100 text-slate-700 hover:bg-slate-200"}`}
+          >
+            All · {EXTENDED_PORTFOLIO.length}
+          </button>
+          {TYPES.map((t) => {
+            const c = EXTENDED_PORTFOLIO.filter((d) => d.type === t).length;
+            return (
+              <button
+                key={t}
+                onClick={() => setFilter(t)}
+                className={`rounded-full px-3 py-1 text-xs transition ${filter === t ? "bg-ink text-paper" : "bg-slate-100 text-slate-700 hover:bg-slate-200"}`}
+              >
+                {typeLabel[t]} · {c}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="mt-6 grid gap-px bg-border md:grid-cols-2 lg:grid-cols-3">
+          {deals.map((d) => (
+            <div key={d.name} className="group bg-paper p-6 transition hover:bg-slate-100/60">
+              <div className="flex items-center justify-between">
+                <span className={`rounded px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider ${typeColor[d.type]}`}>{typeLabel[d.type]}</span>
+                <span className="font-mono text-xs text-slate-500">{d.cap}</span>
               </div>
-            ))}
-          </div>
+              <div className="mt-4 font-display text-xl font-medium text-ink">{d.name}</div>
+              <div className="mt-1 flex items-center gap-1 text-xs text-slate-500"><MapPin size={11} /> {d.meta}</div>
+              <div className="mt-5 grid grid-cols-3 gap-3">
+                <div><div className="text-[9px] uppercase tracking-wider text-slate-500">Value</div><div className="mt-0.5 font-mono text-sm text-orange">{d.value}</div></div>
+                <div><div className="text-[9px] uppercase tracking-wider text-slate-500">NOI</div><div className="mt-0.5 font-mono text-sm text-ink">{d.noi}</div></div>
+                <div><div className="text-[9px] uppercase tracking-wider text-slate-500">DSCR</div><div className="mt-0.5 font-mono text-sm text-ink">{d.dscr}</div></div>
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="mt-12 rounded-lg border border-border bg-slate-100/50 p-6">
           <p className="text-sm text-slate-700">
-            Diligence-tier deals surface on this page automatically once they clear the threshold. Live wiring connects to the RePrime deal-management system via a v2 API.{" "}
+            Diligence-tier deals surface here automatically once they clear the threshold. Live wiring connects to the RePrime deal-management system via a v2 API.{" "}
             <Link href="/contact" className="text-orange hover:underline">Request access <ArrowRight size={12} className="inline" /></Link>
           </p>
         </div>
       </div>
     </section>
-  );
-}
-
-function Stat({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
-  return (
-    <div>
-      <div className="text-[9px] uppercase tracking-wider text-slate-500">{label}</div>
-      <div className={`mt-0.5 font-mono text-sm ${accent ? "text-orange" : "text-ink"}`}>{value}</div>
-    </div>
   );
 }
