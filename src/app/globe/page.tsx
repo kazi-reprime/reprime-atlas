@@ -1,8 +1,6 @@
-import dynamic from "next/dynamic";
+import HeroGlobe from "@/components/globe/HeroGlobe";
 import SampleBadge from "@/components/ui/SampleBadge";
 import { ARCS, HUBS } from "@/lib/sample-data";
-
-const HeroGlobe = dynamic(() => import("@/components/globe/HeroGlobe"), { ssr: false });
 
 export const metadata = { title: "Capital-flow globe" };
 
