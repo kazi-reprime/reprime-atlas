@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-paper: #FAFAF7;
+  --color-ink: #0B1220;
+  --color-navy: #0F1E3D;
+  --color-navy-deep: #091533;
+  --color-navy-soft: #1E3360;
+  --color-orange: #E8763A;
+  --color-orange-soft: #F4A574;
+  --color-gold: #D4AF37;
+  --color-gold-soft: #E8D58A;
+  --color-slate-100: #F1F5F9;
+  --color-slate-300: #CBD5E1;
+  --color-slate-500: #64748B;
+  --color-slate-700: #334155;
+  --color-border: #E5E7EB;
+  --color-emerald-300: #6EE7B7;
+  --color-rose-300: #FDA4AF;
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+}
+
+html, body { height: 100%; }
+html { background: var(--color-paper); color: var(--color-ink); }
+body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+.font-display { font-family: var(--font-display); }
+.font-mono { font-family: var(--font-mono); }
+::selection { background: color-mix(in oklab, var(--color-orange) 35%, transparent); }
+
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.animate-ticker { animation: ticker 70s linear infinite; }
+
+@keyframes livepulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.92); } }
+.animate-livepulse { animation: livepulse 1.6s ease-in-out infinite; }
+
+@keyframes float-y { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.animate-float-y { animation: float-y 6s ease-in-out infinite; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.bg-grid-dark {
+  background-image:
+    linear-gradient(to right, rgba(212,175,55,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(212,175,55,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.bg-grid-light {
+  background-image:
+    linear-gradient(to right, rgba(15,30,61,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15,30,61,0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ticker, .animate-livepulse, .animate-float-y { animation: none; }
+}
