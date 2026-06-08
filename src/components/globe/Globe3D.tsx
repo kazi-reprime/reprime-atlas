@@ -1,12 +1,16 @@
 "use client";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Stars, Line } from "@react-three/drei";
-import { useMemo, useRef } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { OrbitControls, Stars, Line, Html } from "@react-three/drei";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
-import { ARCS, HUBS } from "@/lib/sample-data";
+import { feature } from "topojson-client";
+import { ARCS } from "@/lib/sample-data";
+import { GLOBE_LABELS } from "@/lib/reprime-data";
 import { PALETTE } from "@/lib/constants";
 
-function latLonToVec3(lat: number, lon: number, r = 2): THREE.Vector3 {
+const RADIUS = 2;
+
+function latLonToVec3(lat: number, lon: number, r = RADIUS): THREE.Vector3 {
   const phi = ((90 - lat) * Math.PI) / 180;
   const theta = ((lon + 180) * Math.PI) / 180;
   return new THREE.Vector3(
@@ -16,132 +20,247 @@ function latLonToVec3(lat: number, lon: number, r = 2): THREE.Vector3 {
   );
 }
 
-function useProceduralGlobeTexture() {
-  return useMemo(() => {
-    if (typeof document === "undefined") return null;
-    const c = document.createElement("canvas");
-    c.width = 2048; c.height = 1024;
-    const g = c.getContext("2d");
-    if (!g) return null;
-    g.fillStyle = PALETTE.navyDeep;
-    g.fillRect(0, 0, 2048, 1024);
-    g.fillStyle = "rgba(232,118,58,0.12)";
-    for (let i = 0; i < 9000; i++) {
-      g.beginPath();
-      g.arc(Math.random() * 2048, Math.random() * 1024, Math.random() * 1.4, 0, Math.PI * 2);
-      g.fill();
-    }
-    g.strokeStyle = "rgba(212,175,55,0.20)";
-    g.lineWidth = 0.8;
-    for (let lat = -80; lat <= 80; lat += 15) {
-      const y = ((90 - lat) / 180) * 1024;
-      g.beginPath(); g.moveTo(0, y); g.lineTo(2048, y); g.stroke();
-    }
-    for (let lon = 0; lon < 360; lon += 30) {
-      const x = (lon / 360) * 2048;
-      g.beginPath(); g.moveTo(x, 0); g.lineTo(x, 1024); g.stroke();
-    }
-    const t = new THREE.CanvasTexture(c);
-    t.colorSpace = THREE.SRGBColorSpace;
-    t.anisotropy = 4;
-    return t;
-  }, []);
-}
-
-function GlobeSphere() {
-  const ref = useRef<THREE.Group>(null);
-  const tex = useProceduralGlobeTexture();
-  useFrame((_, dt) => { if (ref.current) ref.current.rotation.y += dt * 0.05; });
+function GlobeBase() {
   return (
-    <group ref={ref}>
+    <>
       <mesh>
-        <sphereGeometry args={[2, 96, 96]} />
-        <meshStandardMaterial map={tex ?? undefined} roughness={0.85} metalness={0.06} emissive={PALETTE.navy} emissiveIntensity={0.22} />
+        <sphereGeometry args={[RADIUS, 96, 96]} />
+        <meshStandardMaterial
+          color={PALETTE.navyDeep}
+          roughness={0.95}
+          metalness={0.05}
+          emissive={PALETTE.navy}
+          emissiveIntensity={0.18}
+        />
       </mesh>
+      {/* Atmospheric halo */}
       <mesh>
-        <sphereGeometry args={[2.04, 64, 64]} />
-        <meshBasicMaterial color={PALETTE.orange} transparent opacity={0.05} side={THREE.BackSide} />
+        <sphereGeometry args={[RADIUS * 1.04, 64, 64]} />
+        <meshBasicMaterial color={PALETTE.orange} transparent opacity={0.06} side={THREE.BackSide} />
       </mesh>
-    </group>
+      {/* Lat/lon graticule overlay */}
+      <Graticule />
+    </>
   );
 }
 
-function Arcs() {
-  const curves = useMemo(() => ARCS.map((a) => {
-    const start = latLonToVec3(a.from[0], a.from[1], 2.005);
-    const end = latLonToVec3(a.to[0], a.to[1], 2.005);
-    const mid = start.clone().add(end).multiplyScalar(0.5).normalize().multiplyScalar(2 + 0.22 * a.weight);
-    const curve = new THREE.QuadraticBezierCurve3(start, mid, end);
-    return { points: curve.getPoints(80).map((p) => [p.x, p.y, p.z] as [number, number, number]), color: a.color };
-  }), []);
+function Graticule() {
+  const lines = useMemo(() => {
+    const out: Array<[number, number, number][]> = [];
+    for (let lat = -75; lat <= 75; lat += 15) {
+      const pts: [number, number, number][] = [];
+      for (let lon = -180; lon <= 180; lon += 5) {
+        const v = latLonToVec3(lat, lon, RADIUS * 1.002);
+        pts.push([v.x, v.y, v.z]);
+      }
+      out.push(pts);
+    }
+    for (let lon = -180; lon < 180; lon += 30) {
+      const pts: [number, number, number][] = [];
+      for (let lat = -85; lat <= 85; lat += 5) {
+        const v = latLonToVec3(lat, lon, RADIUS * 1.002);
+        pts.push([v.x, v.y, v.z]);
+      }
+      out.push(pts);
+    }
+    return out;
+  }, []);
   return (
     <group>
-      {curves.map((c, i) => (
-        <Line key={i} points={c.points} color={c.color} transparent opacity={0.6} lineWidth={1.2} />
+      {lines.map((pts, i) => (
+        <Line key={i} points={pts} color={PALETTE.gold} transparent opacity={0.12} lineWidth={1} />
       ))}
     </group>
   );
 }
 
-function HubMarkers() {
+function Countries() {
+  const [topology, setTopology] = useState<any>(null);
+  useEffect(() => {
+    let cancelled = false;
+    // Public CDN topology (Natural Earth, simplified) — runtime fetch, not bundled
+    fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
+      .then((r) => r.json())
+      .then((t: any) => { if (!cancelled) setTopology(t); })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
+
+  const lines = useMemo(() => {
+    if (!topology) return [];
+    const countries: any = feature(topology, topology.objects.countries as any);
+    const allLines: Array<[number, number, number][]> = [];
+    const features: any[] = countries.features ?? [countries];
+    for (const f of features) {
+      const geom = f.geometry;
+      if (!geom) continue;
+      const ringSets: number[][][][] =
+        geom.type === "Polygon"
+          ? [geom.coordinates]
+          : geom.type === "MultiPolygon"
+          ? geom.coordinates
+          : [];
+      for (const poly of ringSets) {
+        for (const ring of poly) {
+          const pts: [number, number, number][] = [];
+          for (const [lon, lat] of ring) {
+            const v = latLonToVec3(lat, lon, RADIUS * 1.005);
+            pts.push([v.x, v.y, v.z]);
+          }
+          if (pts.length > 1) allLines.push(pts);
+        }
+      }
+    }
+    return allLines;
+  }, [topology]);
+
+  if (!lines.length) return null;
   return (
     <group>
-      {HUBS.map((h) => {
-        const p = latLonToVec3(h.lat, h.lon, 2.02);
+      {lines.map((pts, i) => (
+        <Line key={i} points={pts} color={PALETTE.orange} transparent opacity={0.55} lineWidth={1.1} />
+      ))}
+    </group>
+  );
+}
+
+function RotatingEarth({ children }: { children: React.ReactNode }) {
+  const ref = useRef<THREE.Group>(null);
+  useFrame((_, dt) => { if (ref.current) ref.current.rotation.y += dt * 0.045; });
+  return <group ref={ref}>{children}</group>;
+}
+
+function Arcs() {
+  const curves = useMemo(
+    () =>
+      ARCS.map((a) => {
+        const start = latLonToVec3(a.from[0], a.from[1], RADIUS * 1.005);
+        const end = latLonToVec3(a.to[0], a.to[1], RADIUS * 1.005);
+        const mid = start.clone().add(end).multiplyScalar(0.5).normalize().multiplyScalar(RADIUS + 0.25 * a.weight);
+        const curve = new THREE.QuadraticBezierCurve3(start, mid, end);
+        return { points: curve.getPoints(80).map((p) => [p.x, p.y, p.z] as [number, number, number]), color: a.color };
+      }),
+    []
+  );
+  return (
+    <group>
+      {curves.map((c, i) => (
+        <Line key={i} points={c.points} color={c.color} transparent opacity={0.7} lineWidth={1.3} />
+      ))}
+    </group>
+  );
+}
+
+function HubMarkersAndLabels() {
+  const { camera } = useThree();
+  const [tick, setTick] = useState(0);
+  useFrame(() => setTick((t) => (t + 1) % 600));
+  return (
+    <group>
+      {GLOBE_LABELS.map((h) => {
+        const p = latLonToVec3(h.lat, h.lon, RADIUS * 1.012);
+        const facing = p.clone().normalize().dot(camera.position.clone().normalize()) > 0.05;
         return (
-          <mesh key={h.id} position={[p.x, p.y, p.z]}>
-            <sphereGeometry args={[0.022, 16, 16]} />
-            <meshBasicMaterial color={PALETTE.orange} />
-          </mesh>
+          <group key={h.id} position={[p.x, p.y, p.z]}>
+            <mesh>
+              <sphereGeometry args={[h.tier === 1 ? 0.028 : 0.02, 16, 16]} />
+              <meshBasicMaterial color={PALETTE.orange} />
+            </mesh>
+            {/* Pulse ring */}
+            <mesh>
+              <sphereGeometry args={[0.04 + (tick % 60) * 0.0015, 16, 16]} />
+              <meshBasicMaterial color={PALETTE.orange} transparent opacity={0.25 - (tick % 60) * 0.004} />
+            </mesh>
+            {facing && (
+              <Html
+                position={[0, 0.06, 0]}
+                center
+                distanceFactor={6}
+                style={{ pointerEvents: "none", whiteSpace: "nowrap" }}
+              >
+                <span
+                  style={{
+                    fontFamily: "ui-monospace, monospace",
+                    fontSize: 10,
+                    color: "#FAFAF7",
+                    background: "rgba(11,18,32,0.7)",
+                    padding: "2px 6px",
+                    borderRadius: 4,
+                    border: "1px solid rgba(212,175,55,0.35)",
+                    letterSpacing: 0.4,
+                  }}
+                >
+                  {h.name}
+                </span>
+              </Html>
+            )}
+          </group>
         );
       })}
     </group>
   );
 }
 
-function FlowParticles() {
-  const ref = useRef<THREE.Points>(null);
-  const geometry = useMemo(() => {
-    const n = 2000;
-    const positions = new Float32Array(n * 3);
-    for (let i = 0; i < n; i++) {
-      const lat = (Math.random() - 0.5) * 180;
-      const lon = Math.random() * 360 - 180;
-      const r = 2.1 + Math.random() * 0.3;
-      const v = latLonToVec3(lat, lon, r);
-      positions[i * 3] = v.x; positions[i * 3 + 1] = v.y; positions[i * 3 + 2] = v.z;
-    }
-    const g = new THREE.BufferGeometry();
-    g.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    return g;
-  }, []);
-  useFrame((_, dt) => { if (ref.current) ref.current.rotation.y += dt * 0.025; });
+function OrbitingLogo() {
+  const ref = useRef<THREE.Group>(null);
+  useFrame((state) => {
+    if (!ref.current) return;
+    const t = state.clock.elapsedTime;
+    const r = RADIUS * 1.55;
+    ref.current.position.set(Math.cos(t * 0.35) * r, Math.sin(t * 0.5) * 0.5, Math.sin(t * 0.35) * r);
+    ref.current.lookAt(0, 0, 0);
+  });
   return (
-    <points ref={ref}>
-      <primitive object={geometry} attach="geometry" />
-      <pointsMaterial size={0.02} color={PALETTE.gold} transparent opacity={0.75} sizeAttenuation />
-    </points>
+    <group ref={ref}>
+      <Html center distanceFactor={6} style={{ pointerEvents: "none" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            gap: 4,
+            background: "linear-gradient(135deg, rgba(11,18,32,0.85), rgba(15,30,61,0.85))",
+            border: "1px solid rgba(212,175,55,0.5)",
+            padding: "6px 14px",
+            borderRadius: 999,
+            boxShadow: "0 0 20px rgba(232,118,58,0.35)",
+            backdropFilter: "blur(4px)",
+            fontFamily: "var(--font-fraunces), serif",
+            fontSize: 15,
+            fontWeight: 600,
+            letterSpacing: 0.2,
+            color: "#FAFAF7",
+            whiteSpace: "nowrap",
+          }}
+        >
+          <span>RePrime</span>
+          <span style={{ color: "#E8763A" }}>Atlas</span>
+        </div>
+      </Html>
+    </group>
   );
 }
 
 type Props = { interactive?: boolean };
+
 export default function Globe3D({ interactive = false }: Props) {
   return (
     <Canvas camera={{ position: [0, 0.4, 6.4], fov: 42 }} dpr={[1, 2]} gl={{ antialias: true }}>
-      <ambientLight intensity={0.45} />
-      <directionalLight position={[5, 4, 5]} intensity={1.05} color={PALETTE.paper} />
-      <directionalLight position={[-5, -2, -3]} intensity={0.5} color={PALETTE.orange} />
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[5, 4, 5]} intensity={1.1} color={PALETTE.paper} />
+      <directionalLight position={[-5, -2, -3]} intensity={0.55} color={PALETTE.orange} />
       <Stars radius={70} depth={50} count={3500} factor={2.8} fade speed={0.3} />
-      <GlobeSphere />
-      <Arcs />
-      <HubMarkers />
-      <FlowParticles />
+      <RotatingEarth>
+        <GlobeBase />
+        <Countries />
+        <Arcs />
+        <HubMarkersAndLabels />
+      </RotatingEarth>
+      <OrbitingLogo />
       <OrbitControls
         enableZoom={interactive}
         enablePan={false}
         enableRotate={interactive}
-        autoRotate
-        autoRotateSpeed={0.45}
+        autoRotate={false}
         minDistance={4}
         maxDistance={9}
       />
