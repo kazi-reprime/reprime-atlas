@@ -37,6 +37,7 @@ export default function Footer() {
               <li><Link href="/risk" className="hover:text-orange">Risk surfaces</Link></li>
               <li><Link href="/terminal" className="hover:text-orange">Terminal</Link></li>
               <li><Link href="/dashboard" className="hover:text-orange">Dashboard</Link></li>
+              <li><Link href="/pulse" className="hover:text-orange">Live pulse</Link></li>
             </ul>
           </div>
           <div>

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
+  /* Original brand */
   --color-paper: #FAFAF7;
   --color-ink: #0B1220;
   --color-navy: #0F1E3D;
@@ -10,6 +11,20 @@
   --color-orange-soft: #F4A574;
   --color-gold: #D4AF37;
   --color-gold-soft: #E8D58A;
+
+  /* NEW — brighter, more individual palette */
+  --color-ivory: #FFFCF4;
+  --color-cream: #FFF7E6;
+  --color-pearl: #F7F3E8;
+  --color-champagne: #F2E7C8;
+  --color-bronze: #C89A4F;
+  --color-copper: #B87333;
+  --color-amber: #F5A623;
+  --color-rose-gold: #E0A091;
+  --color-sky-pale: #E8F1F8;
+  --color-mint-pale: #E4F4EC;
+
+  /* Slates */
   --color-slate-100: #F1F5F9;
   --color-slate-300: #CBD5E1;
   --color-slate-500: #64748B;
@@ -17,6 +32,7 @@
   --color-border: #E5E7EB;
   --color-emerald-300: #6EE7B7;
   --color-rose-300: #FDA4AF;
+
   --font-display: var(--font-fraunces);
   --font-sans: var(--font-inter);
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
@@ -29,14 +45,98 @@ body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 .font-mono { font-family: var(--font-mono); }
 ::selection { background: color-mix(in oklab, var(--color-orange) 35%, transparent); }
 
+/* ===== Glassmorphism utilities ===== */
+.glass-light {
+  background: linear-gradient(135deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.42) 100%);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow: 0 8px 32px rgba(11,18,32,0.08), inset 0 1px 0 rgba(255,255,255,0.7);
+}
+.glass-cream {
+  background: linear-gradient(135deg, rgba(255,252,244,0.85) 0%, rgba(242,231,200,0.65) 100%);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid rgba(212,175,55,0.25);
+  box-shadow: 0 8px 32px rgba(184,115,51,0.12), inset 0 1px 0 rgba(255,255,255,0.7);
+}
+.glass-dark {
+  background: linear-gradient(135deg, rgba(15,30,61,0.55) 0%, rgba(9,21,51,0.42) 100%);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(212,175,55,0.22);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.glass-gold {
+  background: linear-gradient(135deg, rgba(212,175,55,0.22) 0%, rgba(232,118,58,0.10) 100%);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgba(212,175,55,0.45);
+  box-shadow: 0 8px 32px rgba(212,175,55,0.22), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+/* Holographic shimmer edge */
+.glass-shimmer { position: relative; overflow: hidden; }
+.glass-shimmer::after {
+  content: ""; position: absolute; inset: -2px; border-radius: inherit; padding: 1px;
+  background: conic-gradient(from 0deg, rgba(212,175,55,0) 0%, rgba(212,175,55,0.55) 25%, rgba(232,118,58,0.5) 50%, rgba(212,175,55,0.55) 75%, rgba(212,175,55,0) 100%);
+  -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: shimmer-rot 8s linear infinite;
+  pointer-events: none;
+}
+@keyframes shimmer-rot { to { transform: rotate(360deg); } }
+
+/* Mesh gradient backgrounds */
+.mesh-warm {
+  background-image:
+    radial-gradient(at 20% 20%, rgba(232,118,58,0.18) 0px, transparent 50%),
+    radial-gradient(at 80% 10%, rgba(212,175,55,0.20) 0px, transparent 55%),
+    radial-gradient(at 70% 80%, rgba(200,154,79,0.14) 0px, transparent 50%),
+    radial-gradient(at 10% 90%, rgba(244,165,116,0.14) 0px, transparent 50%);
+}
+.mesh-cool-dark {
+  background-image:
+    radial-gradient(at 20% 20%, rgba(15,30,61,0.85) 0px, transparent 55%),
+    radial-gradient(at 80% 30%, rgba(212,175,55,0.18) 0px, transparent 50%),
+    radial-gradient(at 60% 80%, rgba(232,118,58,0.20) 0px, transparent 50%),
+    radial-gradient(at 10% 90%, rgba(11,18,32,1) 0px, transparent 60%);
+  background-color: #091533;
+}
+.mesh-ivory {
+  background-image:
+    radial-gradient(at 25% 25%, rgba(255,252,244,1) 0px, transparent 55%),
+    radial-gradient(at 75% 30%, rgba(242,231,200,0.55) 0px, transparent 50%),
+    radial-gradient(at 60% 90%, rgba(244,165,116,0.18) 0px, transparent 50%),
+    radial-gradient(at 10% 100%, rgba(212,175,55,0.10) 0px, transparent 60%);
+  background-color: #FFFCF4;
+}
+
+/* SVG noise grain (inline data URI) */
+.noise {
+  position: relative;
+}
+.noise::before {
+  content: "";
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/></svg>");
+  background-size: 160px 160px;
+  opacity: 0.06; mix-blend-mode: overlay;
+}
+
+/* Existing animations */
 @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 .animate-ticker { animation: ticker 70s linear infinite; }
-
 @keyframes livepulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.92); } }
 .animate-livepulse { animation: livepulse 1.6s ease-in-out infinite; }
-
 @keyframes float-y { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 .animate-float-y { animation: float-y 6s ease-in-out infinite; }
+
+/* NEW — slow breathe + gradient drift */
+@keyframes breathe { 0%,100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.04); filter: brightness(1.1); } }
+.animate-breathe { animation: breathe 4.5s ease-in-out infinite; }
+@keyframes hue-drift { 0%,100% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(15deg); } }
+.animate-hue-drift { animation: hue-drift 9s ease-in-out infinite; }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -55,5 +155,6 @@ body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-ticker, .animate-livepulse, .animate-float-y { animation: none; }
+  .animate-ticker, .animate-livepulse, .animate-float-y, .animate-breathe, .animate-hue-drift { animation: none; }
+  .glass-shimmer::after { animation: none; }
 }

@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 const NAV = [
   { href: "/dashboard", label: "Dashboard" },
   { href: "/terminal", label: "Terminal" },
+  { href: "/pulse", label: "Pulse" },
   { href: "/globe", label: "Globe" },
   { href: "/flow", label: "Flow" },
   { href: "/markets", label: "Markets" },
@@ -23,11 +24,11 @@ export default function NavBar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-paper/85 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-border/50 glass-light backdrop-blur-xl">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
         <Link href="/" className="flex items-baseline gap-1.5">
           <span className="font-display text-xl font-bold tracking-tight text-ink">RePrime</span>
-          <span className="font-display text-xl font-medium text-orange">Atlas</span>
+          <span className="font-display text-xl font-medium bg-gradient-to-r from-orange via-copper to-gold bg-clip-text text-transparent">Atlas</span>
         </Link>
         <nav className="hidden items-center gap-7 md:flex">
           {NAV.map((item) => {
