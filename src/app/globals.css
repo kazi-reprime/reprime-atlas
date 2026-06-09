@@ -35,6 +35,25 @@
 
   --font-display: var(--font-fraunces);
   --font-sans: var(--font-inter);
+  
+  /* Stitch CRE terminal tokens (dark-room institutional) */
+  --color-stitch-bg: #0A0C10;
+  --color-stitch-surface: #111418;
+  --color-stitch-surface-lowest: #0c0e12;
+  --color-stitch-surface-low: #1a1c20;
+  --color-stitch-surface-mid: #1e2024;
+  --color-stitch-surface-high: #282a2e;
+  --color-stitch-surface-highest: #333539;
+  --color-stitch-on-surface: #e2e2e8;
+  --color-stitch-on-surface-variant: #c2c6d6;
+  --color-stitch-outline: #8c909f;
+  --color-stitch-outline-variant: #2D333B;
+  --color-stitch-primary: #adc6ff;
+  --color-stitch-secondary: #4edea3;
+  --color-stitch-tertiary: #ffb3ad;
+  --color-stitch-error: #ffb4ab;
+  --color-stitch-amber: #F59E0B;
+
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 }
 
@@ -158,3 +177,33 @@ body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
   .animate-ticker, .animate-livepulse, .animate-float-y, .animate-breathe, .animate-hue-drift { animation: none; }
   .glass-shimmer::after { animation: none; }
 }
+
+
+/* ===== Stitch / Console utilities ===== */
+.stitch-grid {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(45,51,59,0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(45,51,59,0.22) 1px, transparent 1px);
+}
+.stitch-mesh {
+  background:
+    radial-gradient(at 18% 22%, rgba(173,198,255,0.10) 0px, transparent 55%),
+    radial-gradient(at 82% 32%, rgba(78,222,163,0.06) 0px, transparent 50%),
+    radial-gradient(at 50% 90%, rgba(245,158,11,0.05) 0px, transparent 55%),
+    #0A0C10;
+}
+.stitch-glass {
+  background: rgba(17,20,24,0.78);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid #2D333B;
+}
+.stitch-scanline {
+  background: linear-gradient(to bottom, transparent 50%, rgba(173,198,255,0.025) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+.glow-blue { box-shadow: 0 0 20px rgba(173,198,255,0.12); }
+@keyframes ticker-stitch { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.animate-ticker-stitch { animation: ticker-stitch 36s linear infinite; }

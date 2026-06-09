@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 const ROUTES = [
   "", "globe", "markets", "signals", "metros", "properties", "sources",
-  "dashboard", "terminal", "pulse", "explore", "risk", "team", "partners", "faq", "atlas", "showcase", "about", "contact",
+  "dashboard", "terminal", "console", "sector-heatmap", "risk-terrain", "liquidity", "pulse", "explore", "risk", "team", "partners", "faq", "atlas", "showcase", "about", "contact",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

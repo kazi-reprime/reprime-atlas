@@ -36,6 +36,10 @@ export default function Footer() {
               <li><Link href="/properties" className="hover:text-orange">Properties</Link></li>
               <li><Link href="/risk" className="hover:text-orange">Risk surfaces</Link></li>
               <li><Link href="/terminal" className="hover:text-orange">Terminal</Link></li>
+              <li><Link href="/console" className="hover:text-orange">Console</Link></li>
+              <li><Link href="/liquidity" className="hover:text-orange">Liquidity</Link></li>
+              <li><Link href="/risk-terrain" className="hover:text-orange">Risk terrain</Link></li>
+              <li><Link href="/sector-heatmap" className="hover:text-orange">Sector heatmap</Link></li>
               <li><Link href="/dashboard" className="hover:text-orange">Dashboard</Link></li>
               <li><Link href="/pulse" className="hover:text-orange">Live pulse</Link></li>
             </ul>

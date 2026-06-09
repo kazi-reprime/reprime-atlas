@@ -7,6 +7,10 @@ import { Menu, X } from "lucide-react";
 const NAV = [
   { href: "/dashboard", label: "Dashboard" },
   { href: "/terminal", label: "Terminal" },
+    { href: "/console", label: "Console" },
+  { href: "/liquidity", label: "Liquidity" },
+  { href: "/risk-terrain", label: "Risk Terrain" },
+  { href: "/sector-heatmap", label: "Heatmap" },
   { href: "/pulse", label: "Pulse" },
   { href: "/globe", label: "Globe" },
   { href: "/flow", label: "Flow" },
