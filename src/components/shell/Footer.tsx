@@ -8,63 +8,46 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-baseline gap-1.5">
               <span className="font-display text-lg font-bold">RePrime</span>
-              <span className="font-display text-lg font-medium text-orange">Atlas</span>
+              <span className="font-display text-lg font-medium bg-gradient-to-r from-orange via-copper to-gold bg-clip-text text-transparent">Atlas</span>
             </div>
-            <p className="mt-2 max-w-xs text-xs leading-relaxed text-slate-500">
-              Institutional commercial real estate intelligence. 22 live sources, 1,932-source
-              catalog, one canvas.
-            </p>
-            <p className="mt-3 text-[11px] text-slate-500">
-              Reads from the{" "}
-              <a
-                href="https://github.com/kazi-reprime/reprime-data-platform"
-                className="underline decoration-slate-300 underline-offset-2 hover:text-orange"
-              >
-                RePrime Data Platform
-              </a>
-              .
-            </p>
+            <p className="mt-2 max-w-xs text-xs leading-relaxed text-slate-500">Institutional CRE intelligence. 22 live sources, 1,155-source catalog, one canvas.</p>
+            <p className="mt-3 text-[11px] text-slate-500">Reads from <a href="https://github.com/kazi-reprime/reprime-data-platform" className="underline decoration-slate-300 underline-offset-2 hover:text-orange">RePrime Data Platform</a>.</p>
           </div>
           <div>
-            <div className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Surfaces</div>
+            <div className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Terminal</div>
             <ul className="mt-3 space-y-1.5 text-sm">
-              <li><Link href="/globe" className="hover:text-orange">Capital-flow globe</Link></li>
-              <li><Link href="/flow" className="hover:text-orange">Flow field</Link></li>
-              <li><Link href="/markets" className="hover:text-orange">Markets heatmap</Link></li>
-              <li><Link href="/signals" className="hover:text-orange">Source signals</Link></li>
-              <li><Link href="/metros" className="hover:text-orange">Metro skyline</Link></li>
-              <li><Link href="/properties" className="hover:text-orange">Properties</Link></li>
-              <li><Link href="/risk" className="hover:text-orange">Risk surfaces</Link></li>
-              <li><Link href="/terminal" className="hover:text-orange">Terminal</Link></li>
-              <li><Link href="/console" className="hover:text-orange">Console</Link></li>
-              <li><Link href="/liquidity" className="hover:text-orange">Liquidity</Link></li>
-              <li><Link href="/risk-terrain" className="hover:text-orange">Risk terrain</Link></li>
-              <li><Link href="/sector-heatmap" className="hover:text-orange">Sector heatmap</Link></li>
-              <li><Link href="/dashboard" className="hover:text-orange">Dashboard</Link></li>
-              <li><Link href="/pulse" className="hover:text-orange">Live pulse</Link></li>
+              <li><Link href="/terminal#t=overview"  className="hover:text-orange">Overview</Link></li>
+              <li><Link href="/terminal#t=markets"   className="hover:text-orange">Markets</Link></li>
+              <li><Link href="/terminal#t=liquidity" className="hover:text-orange">Liquidity</Link></li>
+              <li><Link href="/terminal#t=risk"      className="hover:text-orange">Risk</Link></li>
+              <li><Link href="/terminal#t=sectors"   className="hover:text-orange">Sectors</Link></li>
+              <li><Link href="/terminal#t=pulse"     className="hover:text-orange">Pulse</Link></li>
+              <li><Link href="/terminal#t=signals"   className="hover:text-orange">Signals</Link></li>
             </ul>
           </div>
           <div>
-            <div className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Platform</div>
+            <div className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Visualize</div>
             <ul className="mt-3 space-y-1.5 text-sm">
-              <li><Link href="/sources" className="hover:text-orange">Source catalog</Link></li>
-              <li><Link href="/explore" className="hover:text-orange">Address explorer</Link></li>
-              <li><Link href="/team" className="hover:text-orange">Team</Link></li>
-              <li><Link href="/partners" className="hover:text-orange">Partners</Link></li>
-              <li><Link href="/faq" className="hover:text-orange">FAQ</Link></li>
-              <li><Link href="/about" className="hover:text-orange">About</Link></li>
-              <li><Link href="/contact" className="hover:text-orange">Request access</Link></li>
+              <li><Link href="/visualize#globe"      className="hover:text-orange">Capital-flow globe</Link></li>
+              <li><Link href="/visualize#flow"       className="hover:text-orange">Flow field</Link></li>
+              <li><Link href="/visualize#metros"     className="hover:text-orange">Metro skyline</Link></li>
+              <li><Link href="/visualize#properties" className="hover:text-orange">Properties</Link></li>
             </ul>
           </div>
           <div>
-            <div className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Legal</div>
-            <ul className="mt-3 space-y-1.5 text-sm text-slate-500">
-              <li>© 2026 RePrime Group</li>
-              <li>MIT licensed</li>
-              <li>v1.0.0 — Atlas</li>
+            <div className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Info</div>
+            <ul className="mt-3 space-y-1.5 text-sm">
+              <li><Link href="/info#about"     className="hover:text-orange">About</Link></li>
+              <li><Link href="/info#team"      className="hover:text-orange">Team</Link></li>
+              <li><Link href="/info#partners"  className="hover:text-orange">Partners</Link></li>
+              <li><Link href="/info#sources"   className="hover:text-orange">Sources</Link></li>
+              <li><Link href="/info#explorer"  className="hover:text-orange">Address explorer</Link></li>
+              <li><Link href="/info#faq"       className="hover:text-orange">FAQ</Link></li>
+              <li><Link href="/info#contact"   className="hover:text-orange">Request access</Link></li>
             </ul>
           </div>
         </div>
+        <div className="mt-10 border-t border-border pt-6 text-[11px] text-slate-500">© 2026 RePrime Group · v2.0.0 — Atlas Consolidated · MIT licensed</div>
       </div>
     </footer>
   );

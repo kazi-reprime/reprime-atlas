@@ -39,13 +39,13 @@ export default function Home() {
             One canvas. 22 live government and market feeds. A 1,932-source catalog. Built for analysts, allocators, and operators who refuse to chase numbers across forty tabs.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Link href="/globe" className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange to-copper px-5 py-2.5 text-sm font-medium text-navy-deep shadow-[0_8px_24px_rgba(232,118,58,0.45)] transition hover:from-orange-soft hover:to-orange">
+            <Link href="/visualize#globe" className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange to-copper px-5 py-2.5 text-sm font-medium text-navy-deep shadow-[0_8px_24px_rgba(232,118,58,0.45)] transition hover:from-orange-soft hover:to-orange">
               Enter the Atlas <ArrowRight size={16} />
             </Link>
-            <Link href="/pulse" className="inline-flex items-center gap-2 rounded-full glass-gold px-5 py-2.5 text-sm font-medium text-paper transition hover:scale-[1.02]">
+            <Link href="/terminal#t=pulse" className="inline-flex items-center gap-2 rounded-full glass-gold px-5 py-2.5 text-sm font-medium text-paper transition hover:scale-[1.02]">
               Live pulse · 8 gauges
             </Link>
-            <Link href="/sources" className="inline-flex items-center gap-2 rounded-full glass-dark px-5 py-2.5 text-sm font-medium text-paper transition hover:scale-[1.02]">
+            <Link href="/info#sources" className="inline-flex items-center gap-2 rounded-full glass-dark px-5 py-2.5 text-sm font-medium text-paper transition hover:scale-[1.02]">
               Browse 1,155 sources
             </Link>
           </div>
@@ -132,7 +132,7 @@ export default function Home() {
               </p>
             </div>
             <div className="flex justify-end">
-              <Link href="/contact" className="inline-flex items-center gap-2 rounded-full bg-orange px-6 py-3 text-sm font-medium text-navy-deep hover:bg-orange-soft">
+              <Link href="/info#contact" className="inline-flex items-center gap-2 rounded-full bg-orange px-6 py-3 text-sm font-medium text-navy-deep hover:bg-orange-soft">
                 Request access <ArrowRight size={16} />
               </Link>
             </div>
@@ -150,7 +150,7 @@ export default function Home() {
               <p className="mt-4 text-slate-700">
                 The institutional terminal we wanted before we built it. Globe, deal feed, treasury curve, sector donuts, metro skyline, live source pulse — all on the same dark cinematic surface.
               </p>
-              <Link href="/showcase" className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange to-copper px-5 py-2.5 text-sm font-medium text-paper shadow-[0_8px_24px_rgba(232,118,58,0.4)] transition hover:from-copper hover:to-orange">
+              <Link href="/visualize" className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange to-copper px-5 py-2.5 text-sm font-medium text-paper shadow-[0_8px_24px_rgba(232,118,58,0.4)] transition hover:from-copper hover:to-orange">
                 See the showcase →
               </Link>
             </div>

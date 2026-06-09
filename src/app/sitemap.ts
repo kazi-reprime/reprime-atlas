@@ -1,16 +1,11 @@
 import type { MetadataRoute } from "next";
 
-const ROUTES = [
-  "", "globe", "markets", "signals", "metros", "properties", "sources",
-  "dashboard", "terminal", "console", "sector-heatmap", "risk-terrain", "liquidity", "pulse", "explore", "risk", "team", "partners", "faq", "atlas", "showcase", "about", "contact",
-];
-
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://reprime-atlas.vercel.app";
-  return ROUTES.map((r) => ({
-    url: r ? `${base}/${r}` : base,
-    lastModified: new Date(),
-    changeFrequency: r === "" ? "daily" : "weekly",
-    priority: r === "" ? 1 : r === "atlas" || r === "globe" || r === "terminal" || r === "dashboard" ? 0.9 : 0.7,
-  }));
+  return [
+    { url: base,                changeFrequency: "daily" as const,   priority: 1   },
+    { url: `${base}/terminal`,  changeFrequency: "weekly" as const,  priority: 0.9 },
+    { url: `${base}/visualize`, changeFrequency: "weekly" as const,  priority: 0.9 },
+    { url: `${base}/info`,      changeFrequency: "monthly" as const, priority: 0.7 },
+  ].map(s => ({ ...s, lastModified: new Date() }));
 }
