@@ -3,6 +3,7 @@ import { Inter, Fraunces } from "next/font/google";
 import NavBar from "@/components/shell/NavBar";
 import TickerBar from "@/components/shell/TickerBar";
 import Footer from "@/components/shell/Footer";
+import PageTransition from "@/components/transitions/PageTransition";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -35,7 +36,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="min-h-screen bg-paper text-ink antialiased">
         <TickerBar />
         <NavBar />
-        <main>{children}</main>
+        <main><PageTransition>{children}</PageTransition></main>
         <Footer />
       </body>
     </html>

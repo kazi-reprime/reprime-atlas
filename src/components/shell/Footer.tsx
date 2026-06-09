@@ -29,6 +29,7 @@ export default function Footer() {
             <div className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Surfaces</div>
             <ul className="mt-3 space-y-1.5 text-sm">
               <li><Link href="/globe" className="hover:text-orange">Capital-flow globe</Link></li>
+              <li><Link href="/flow" className="hover:text-orange">Flow field</Link></li>
               <li><Link href="/markets" className="hover:text-orange">Markets heatmap</Link></li>
               <li><Link href="/signals" className="hover:text-orange">Source signals</Link></li>
               <li><Link href="/metros" className="hover:text-orange">Metro skyline</Link></li>
