@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Activity, Database, Globe2, Layers } from "lucide-react";
 import HeroGlobe from "@/components/globe/HeroGlobe";
 import SampleBadge from "@/components/ui/SampleBadge";
@@ -134,6 +135,34 @@ export default function Home() {
               <Link href="/contact" className="inline-flex items-center gap-2 rounded-full bg-orange px-6 py-3 text-sm font-medium text-navy-deep hover:bg-orange-soft">
                 Request access <ArrowRight size={16} />
               </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="relative border-y border-border mesh-ivory noise overflow-hidden">
+        <div className="mx-auto max-w-7xl px-6 py-20">
+          <div className="grid gap-10 md:grid-cols-2 items-center">
+            <div>
+              <div className="text-xs uppercase tracking-wider text-copper">Showcase render</div>
+              <h2 className="mt-3 font-display text-4xl font-medium tracking-tight">
+                One canvas for <span className="bg-gradient-to-r from-orange via-copper to-gold bg-clip-text text-transparent">everything</span>.
+              </h2>
+              <p className="mt-4 text-slate-700">
+                The institutional terminal we wanted before we built it. Globe, deal feed, treasury curve, sector donuts, metro skyline, live source pulse — all on the same dark cinematic surface.
+              </p>
+              <Link href="/showcase" className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange to-copper px-5 py-2.5 text-sm font-medium text-paper shadow-[0_8px_24px_rgba(232,118,58,0.4)] transition hover:from-copper hover:to-orange">
+                See the showcase →
+              </Link>
+            </div>
+            <div className="relative overflow-hidden rounded-2xl border border-border shadow-[0_20px_60px_rgba(184,115,51,0.25)]">
+              <Image
+                src="/images/dashboard-hero.jpg"
+                alt="RePrime Atlas concept dashboard"
+                width={1200}
+                height={675}
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="block h-auto w-full"
+              />
             </div>
           </div>
         </div>

@@ -18,6 +18,7 @@ const NAV = [
   { href: "/explore", label: "Explore" },
   { href: "/sources", label: "Sources" },
   { href: "/atlas", label: "Atlas" },
+  { href: "/showcase", label: "Showcase" },
 ];
 
 export default function NavBar() {
