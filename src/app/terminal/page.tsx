@@ -16,11 +16,15 @@ import SourceFlow from "@/components/flow/SourceFlow";
 import RiskTerrain from "@/components/stitch/RiskTerrain";
 import LiveGauge from "@/components/gauges/LiveGauge";
 import SampleBadge from "@/components/ui/SampleBadge";
+import DealFactory from "@/components/factory/DealFactory";
+import LiveOpsFeed from "@/components/factory/LiveOpsFeed";
+import OpsCounters from "@/components/factory/OpsCounters";
 import GlassCard from "@/components/ui/GlassCard";
 import { REPRIME_STATS, REPRIME_PORTFOLIO, REPRIME_FEATURED_DEAL } from "@/lib/reprime-data";
 
-type Tab = "overview" | "markets" | "liquidity" | "risk" | "sectors" | "pulse" | "signals";
+type Tab = "factory" | "overview" | "markets" | "liquidity" | "risk" | "sectors" | "pulse" | "signals";
 const TABS: { k: Tab; label: string }[] = [
+  { k: "factory",   label: "Factory"   },
   { k: "overview",  label: "Overview"  },
   { k: "markets",   label: "Markets"   },
   { k: "liquidity", label: "Liquidity" },
@@ -67,15 +71,15 @@ const SECTORS_BENTO = [
 ];
 
 export default function TerminalPage() {
-  const [tab, setTab] = useState<Tab>("overview");
+  const [tab, setTab] = useState<Tab>("factory");
   const [pulseTick, setPulseTick] = useState(0);
   const [pulseVals, setPulseVals] = useState(GAUGES);
 
   useEffect(() => {
-    const h = (window.location.hash.replace("#t=", "") || "overview") as Tab;
+    const h = (window.location.hash.replace("#t=", "") || "factory") as Tab;
     if (TABS.some(t => t.k === h)) setTab(h);
     const fn = () => {
-      const next = (window.location.hash.replace("#t=", "") || "overview") as Tab;
+      const next = (window.location.hash.replace("#t=", "") || "factory") as Tab;
       if (TABS.some(t => t.k === next)) setTab(next);
     };
     window.addEventListener("hashchange", fn);
@@ -107,7 +111,7 @@ export default function TerminalPage() {
               All signals,<br /><span className="bg-gradient-to-r from-orange via-copper to-gold bg-clip-text text-transparent">one canvas.</span>
             </h1>
             <p className="mt-3 max-w-2xl text-paper/70">
-              Seven panels of institutional CRE intelligence. Hash-routed deep links (e.g. <span className="font-mono text-paper/90">#t=liquidity</span>) share the active panel.
+              Eight panels of institutional CRE intelligence. Hash-routed deep links (e.g. <span className="font-mono text-paper/90">#t=liquidity</span>) share the active panel.
             </p>
           </div>
           <LiveHealthDots />
@@ -126,6 +130,7 @@ export default function TerminalPage() {
         </nav>
 
         <div className="mt-8">
+          {tab === "factory"   && <Factory   />}
           {tab === "overview"  && <Overview  />}
           {tab === "markets"   && <Markets   />}
           {tab === "liquidity" && <Liquidity />}
@@ -143,6 +148,22 @@ export default function TerminalPage() {
         </div>
       </div>
     </section>
+  );
+}
+
+function Factory() {
+  return (
+    <div className="space-y-6">
+      <OpsCounters />
+      <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+        <DealFactory />
+        <LiveOpsFeed />
+      </div>
+      <p className="text-[11px] text-paper/45">
+        Live operations view — a vision instrument; production wires live CRE feeds server-side.
+        Ingest rows stream real source names from the RePrime Data Platform catalog. <SampleBadge dark />
+      </p>
+    </div>
   );
 }
 
