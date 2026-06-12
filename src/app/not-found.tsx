@@ -8,7 +8,7 @@ export default function NotFound() {
           <div className="font-mono text-[11px] uppercase tracking-wider text-orange">404 · OFF THE MAP</div>
           <h1 className="mt-4 font-display text-6xl font-medium tracking-tight">No tile here.</h1>
           <p className="mt-4 max-w-md text-paper/70">
-            The route you tried isn&apos;t in the Atlas. Maybe it&apos;s in v2 — see <span className="font-mono text-paper/85">docs/specs/2026-06-09-v2-roadmap.md</span>.
+            The route you tried isn&apos;t in the Terminal. Maybe it&apos;s in v2 — see <span className="font-mono text-paper/85">docs/specs/2026-06-09-v2-roadmap.md</span>.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link href="/" className="rounded-full bg-orange px-5 py-2 text-sm font-medium text-navy-deep hover:bg-orange-soft">Back to the globe</Link>

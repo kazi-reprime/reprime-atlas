@@ -29,11 +29,11 @@ const PARTNERS = [
 ];
 
 const FAQS = [
-  { q: "What is RePrime Atlas?", a: "A visualization layer over the RePrime Data Platform. Atlas reads from the same warehouse and address fan-out that powers our institutional intelligence, then renders it across Globe, Terminal, Visualize, and Info surfaces." },
-  { q: "Is the data live?",      a: "The platform underneath (22 govt/market APIs, daily Supabase ingest) is live. Atlas surfaces marked with a Sample badge are illustrative until v2 wiring lands." },
+  { q: "What is RePrime Terminal?", a: "A visualization layer over the RePrime Data Platform. The Terminal reads from the same warehouse and address fan-out that powers our institutional intelligence, then renders it across Globe, Terminal, Visualize, and Info surfaces." },
+  { q: "Is the data live?",      a: "The platform underneath (22 govt/market APIs, daily Supabase ingest) is live. Terminal surfaces marked with a Sample badge are illustrative until v2 wiring lands." },
   { q: "Who is this for?",       a: "Analysts, allocators, and operators evaluating a CRE thesis, market, portfolio, or single asset." },
   { q: "What data sources are wired?", a: "FRED, Census ACS, Census Geocoder, BLS, BEA, EIA, US Treasury, SEC EDGAR, FHFA, HUD PDR, EPA ECHO, NOAA ACIS, FEMA NFIP, USGS, OSM Overpass, Wikidata, Finnhub, Alpha Vantage, Twelve Data, Mapillary, Socrata, RePrime Market." },
-  { q: "Is there an API?",       a: "The underlying data platform exposes /api/search (live address fan-out, 13s budget) and /api/health. Atlas v2 will expose its own query API." },
+  { q: "Is there an API?",       a: "The underlying data platform exposes /api/search (live address fan-out, 13s budget) and /api/health. Terminal v2 will expose its own query API." },
   { q: "How do I get access?",   a: "Request access in the form below. We respond within two business days." },
 ];
 

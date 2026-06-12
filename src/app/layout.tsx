@@ -17,17 +17,17 @@ const fraunces = Fraunces({
 
 export const metadata: Metadata = {
   title: {
-    default: "RePrime Atlas — Institutional CRE Intelligence",
-    template: "%s — RePrime Atlas",
+    default: "RePrime Terminal — Institutional CRE Intelligence",
+    template: "%s — RePrime Terminal",
   },
   description:
     "Live address fan-out across 22 government and market APIs, a 1,932-source catalog, and a data-dense visualization layer for institutional commercial real estate.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://reprime-atlas.vercel.app"),
   openGraph: {
     type: "website",
-    title: "RePrime Atlas — Institutional CRE Intelligence",
+    title: "RePrime Terminal — Institutional CRE Intelligence",
     description: "One canvas for 22 live government + market feeds and 1,932 curated CRE sources.",
-    siteName: "RePrime Atlas",
+    siteName: "RePrime Terminal",
   },
 };
 

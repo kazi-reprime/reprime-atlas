@@ -34,7 +34,7 @@ function Spinner({ text }: { text: string }) {
   );
 }
 
-export default function CurvedText3D({ text = "RePrime Atlas" }: { text?: string }) {
+export default function CurvedText3D({ text = "RePrime Terminal" }: { text?: string }) {
   return (
     <Canvas camera={{ position: [0, 0, 4.5], fov: 38 }} dpr={[1, 2]}>
       <ambientLight intensity={0.55} />

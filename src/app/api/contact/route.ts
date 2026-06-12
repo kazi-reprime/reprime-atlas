@@ -35,10 +35,10 @@ export async function POST(req: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "RePrime Atlas <atlas@reprime-atlas.vercel.app>",
+        from: "RePrime Terminal <terminal@reprime-atlas.vercel.app>",
         to: [LEAD_INBOX_EMAIL],
         reply_to: p.email,
-        subject: `Atlas access request — ${p.firm || p.name}`,
+        subject: `Terminal access request — ${p.firm || p.name}`,
         text: [
           `Name:    ${p.name}`,
           `Email:   ${p.email}`,

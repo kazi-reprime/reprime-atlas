@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "RePrime Atlas — institutional CRE intelligence";
+export const alt = "RePrime Terminal — institutional CRE intelligence";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -55,7 +55,7 @@ export default async function Image() {
               borderRadius: 999,
             }}
           >
-            RePrime Atlas
+            RePrime Terminal
           </div>
           <div style={{ fontSize: 14, color: "rgba(250,250,247,0.55)", letterSpacing: 2 }}>v1.0</div>
         </div>

@@ -1,4 +1,4 @@
-export const SITE_NAME = "RePrime Atlas";
+export const SITE_NAME = "RePrime Terminal";
 export const SITE_URL = "https://reprime-atlas.vercel.app";
 export const REPRIME_DATA_PLATFORM_URL = "https://reprime-data-platform.vercel.app";
 export const REPRIME_API_BASE = process.env.REPRIME_API_BASE ?? REPRIME_DATA_PLATFORM_URL;

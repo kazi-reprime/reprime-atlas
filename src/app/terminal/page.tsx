@@ -102,7 +102,7 @@ export default function TerminalPage() {
         {/* Hero strip */}
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <div className="text-xs uppercase tracking-wider text-orange">Atlas Terminal</div>
+            <div className="text-xs uppercase tracking-wider text-orange">RePrime Terminal</div>
             <h1 className="mt-2 font-display text-5xl font-medium tracking-tight">
               All signals,<br /><span className="bg-gradient-to-r from-orange via-copper to-gold bg-clip-text text-transparent">one canvas.</span>
             </h1>
@@ -136,7 +136,7 @@ export default function TerminalPage() {
         </div>
 
         <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-paper/10 pt-8 text-xs text-paper/55">
-          <span>Atlas Terminal · {TABS.length} panels · share-by-hash deep links</span>
+          <span>RePrime Terminal · {TABS.length} panels · share-by-hash deep links</span>
           <Link href="/info#contact" className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange to-copper px-4 py-2 text-paper">
             Request access <ArrowRight size={14} />
           </Link>

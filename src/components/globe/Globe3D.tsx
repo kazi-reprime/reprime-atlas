@@ -233,7 +233,7 @@ function OrbitingLogo() {
           }}
         >
           <span>RePrime</span>
-          <span style={{ color: "#E8763A" }}>Atlas</span>
+          <span style={{ color: "#E8763A" }}>Terminal</span>
         </div>
       </Html>
     </group>

@@ -69,7 +69,7 @@ export default async function Home() {
         <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-20">
           <span className="mb-4 inline-flex w-fit items-center gap-2 rounded-full glass-gold px-3.5 py-1.5 text-xs uppercase tracking-wider text-paper">
             <span className="h-1.5 w-1.5 animate-livepulse rounded-full bg-orange" />
-            {stats.is_live ? `Live · ${stats.sources.toLocaleString()} sources connected` : "Atlas v2 — 4 surfaces, 1 canvas"}
+            {stats.is_live ? `Live · ${stats.sources.toLocaleString()} sources connected` : "RePrime Terminal — 4 surfaces, 1 canvas"}
             {stats.is_live && <Sparkles size={12} className="text-emerald-300" />}
           </span>
           <h1 className="font-display text-5xl font-medium leading-[1.05] tracking-tight md:text-7xl">
@@ -81,7 +81,7 @@ export default async function Home() {
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link href="/visualize#globe" className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange to-copper px-5 py-2.5 text-sm font-medium text-navy-deep shadow-[0_8px_24px_rgba(232,118,58,0.45)] transition hover:from-orange-soft hover:to-orange">
-              Enter the Atlas <ArrowRight size={16} />
+              Enter the Terminal <ArrowRight size={16} />
             </Link>
             <Link href="/terminal" className="inline-flex items-center gap-2 rounded-full glass-gold px-5 py-2.5 text-sm font-medium text-paper transition hover:scale-[1.02]">
               Open Terminal · 7 panels
