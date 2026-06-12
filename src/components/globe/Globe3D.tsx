@@ -82,7 +82,7 @@ function Countries() {
     fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
       .then((r) => r.json())
       .then((t: any) => { if (!cancelled) setTopology(t); })
-      .catch(() => {});
+      .catch((e) => { console.warn("[Globe3D] topology CDN fetch failed — rendering without borders", e); });
     return () => { cancelled = true; };
   }, []);
 

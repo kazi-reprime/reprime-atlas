@@ -34,7 +34,7 @@ export default function PropertyHeatmap() {
     fetch("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json")
       .then((r) => r.json())
       .then((t: any) => setUsGeo(t))
-      .catch(() => {});
+      .catch((e) => { console.warn("[PropertyHeatmap] us-atlas CDN fetch failed — map unavailable", e); });
   }, []);
 
   const proj = useMemo(() => geoAlbersUsa().scale(1200).translate([500, 305]), []);
