@@ -19,6 +19,8 @@ import SampleBadge from "@/components/ui/SampleBadge";
 import DealFactory from "@/components/factory/DealFactory";
 import LiveOpsFeed from "@/components/factory/LiveOpsFeed";
 import OpsCounters from "@/components/factory/OpsCounters";
+import PipelineToday from "@/components/factory/PipelineToday";
+import SourceUniverse from "@/components/factory/SourceUniverse";
 import GlassCard from "@/components/ui/GlassCard";
 import { REPRIME_STATS, REPRIME_PORTFOLIO, REPRIME_FEATURED_DEAL } from "@/lib/reprime-data";
 
@@ -159,6 +161,8 @@ function Factory() {
         <DealFactory />
         <LiveOpsFeed />
       </div>
+      <PipelineToday />
+      <SourceUniverse />
       <p className="text-[11px] text-paper/45">
         Live operations view — a vision instrument; production wires live CRE feeds server-side.
         Ingest rows stream real source names from the RePrime Data Platform catalog. <SampleBadge dark />
